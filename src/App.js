@@ -1,25 +1,43 @@
 import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+
+import AppBar from '@material-ui/core/AppBar';
+import Toolbar from '@material-ui/core/Toolbar';
+
+import { createMuiTheme, makeStyles, ThemeProvider } from '@material-ui/core/styles';
+import orange from '@material-ui/core/colors/orange';
+
+import logo from './assets/socratic-transparent.png';
+
+const useStyles = makeStyles(theme => ({
+  root: {
+    flexGrow: 1,
+  },
+  menuButton: {
+    marginRight: theme.spacing(2),
+  },
+}));
+
+const theme = createMuiTheme({
+  palette: {
+    primary: {
+      main: orange[100]
+    }
+  }
+});
 
 function App() {
+  const classes = useStyles();
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <ThemeProvider theme={theme}>
+      <div className={classes.root}>
+        <AppBar position="static">
+          <Toolbar variant="dense">
+            <img src={logo} alt="logo" />
+          </Toolbar>
+        </AppBar>
+      </div>
+    </ThemeProvider>
   );
 }
 
