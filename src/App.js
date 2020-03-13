@@ -4,9 +4,10 @@ import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
 
 import { createMuiTheme, makeStyles, ThemeProvider } from '@material-ui/core/styles';
-import orange from '@material-ui/core/colors/orange';
 
-import logo from './assets/socratic-transparent.png';
+import logo from './assets/socratic-transparent-white.png';
+
+import Propositions from './Propositions';
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -20,7 +21,10 @@ const useStyles = makeStyles(theme => ({
 const theme = createMuiTheme({
   palette: {
     primary: {
-      main: orange[100]
+      main: '#b71c1c'
+    },
+    secondary: {
+      main: '#f44336'
     }
   }
 });
@@ -31,11 +35,12 @@ function App() {
   return (
     <ThemeProvider theme={theme}>
       <div className={classes.root}>
-        <AppBar position="static">
+        <AppBar position="static" color="primary">
           <Toolbar variant="dense">
             <img src={logo} alt="logo" />
           </Toolbar>
         </AppBar>
+        <Propositions />
       </div>
     </ThemeProvider>
   );
