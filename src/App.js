@@ -21,10 +21,10 @@ const useStyles = makeStyles(theme => ({
 const theme = createMuiTheme({
   palette: {
     primary: {
-      main: '#b71c1c'
+      main: '#801313'
     },
     secondary: {
-      main: '#f44336'
+      main: '#330e62'
     }
   }
 });
