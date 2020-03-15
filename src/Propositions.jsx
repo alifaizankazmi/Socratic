@@ -25,10 +25,6 @@ const useStyles = makeStyles(theme => ({
     inline: {
         display: 'inline-flex'
     },
-    header: {
-        padding: theme.spacing(2),
-        paddingRight: theme.spacing(1)
-    },
     headerButton: {
         height: '48px',
         alignSelf: 'center'
@@ -45,13 +41,15 @@ const useStyles = makeStyles(theme => ({
     textField: {
         verticalAlign: 'baseline',
         padding: theme.spacing(1)
+    },
+    expansionPanelSummary: {
+        paddingLeft: theme.spacing(2)
     }
 }));
 
 export default function Propositions() {
     const classes = useStyles();
     const [isAddClicked, setIsAddClicked] = useState(false);
-    const [canAddProposition, setCanAddProposition] = useState(false);
     const [isExpanded, setIsExpanded] = useState(false);
     const [propositions, setPropositions] = useState([]);
 
@@ -59,10 +57,12 @@ export default function Propositions() {
         <>
             <Paper elevation={1} className={classes.root}>
                 <ExpansionPanel expanded={isExpanded}
-                onChange={() => setIsExpanded(!isExpanded)}>
+                    onChange={() => setIsExpanded(!isExpanded)}
+                    className={classes.expansionPanel}>
                     <ExpansionPanelSummary expandIcon={<ExpandMoreIcon />}
                         aria-controls="panel1a-content"
-                        id="panel1a-header">
+                        id="panel1a-header"
+                        className={classes.expansionPanelSummary}>
                         <Typography variant="h6" className={classes.header} color="primary">
                             Propositions
                         </Typography>
@@ -78,10 +78,8 @@ export default function Propositions() {
                         <AddPropositionPanel
                             {...{
                                 isAddClicked,
-                                canAddProposition,
                                 propositions,
                                 setIsAddClicked,
-                                setCanAddProposition,
                                 setPropositions,
                                 setIsExpanded
                             }} />
@@ -97,7 +95,8 @@ export default function Propositions() {
             </Paper>
             <Paper elevation={2} className={classes.root}>
                 <ExpansionPanel>
-                    <ExpansionPanelSummary expandIcon={<ExpandMoreIcon />}>
+                    <ExpansionPanelSummary expandIcon={<ExpandMoreIcon />}
+                        className={classes.expansionPanelSummary}>
                         <Typography variant="h6" className={classes.header} color="primary">
                             Truth Tables
                         </Typography>

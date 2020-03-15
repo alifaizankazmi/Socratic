@@ -1,4 +1,4 @@
-import React, { useRef } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 
 import { Zoom, makeStyles, IconButton, TextField, Tooltip } from "@material-ui/core";
 
@@ -29,17 +29,34 @@ const useStyles = makeStyles(theme => ({
 }));
 
 export default function AddPropositionPanel({
-    isAddClicked, canAddProposition, propositions,
-    setCanAddProposition, setIsAddClicked, setPropositions, setIsExpanded
+    isAddClicked, propositions,
+    setIsAddClicked, setPropositions, setIsExpanded
 }) {
     const classes = useStyles();
+    const [canAddProposition, setCanAddProposition] = useState(false);
     const propositionRef = useRef(null);
+
+    useEffect(() => {
+        if (isAddClicked) {
+            propositionRef.current.focus();
+        }
+    }, [isAddClicked]);
 
     return (
         <Zoom in={isAddClicked}>
-            <div className={classes.inputArea}
+            <form className={classes.inputArea}
                 onClick={event => {
                     event.stopPropagation();
+                }}
+                onSubmit={event => {
+                    event.preventDefault();
+
+                    setIsAddClicked(false);
+                    setPropositions(
+                        [...propositions, propositionRef.current.value]);
+                    setIsExpanded(true);
+                    propositionRef.current.value = null;
+                    setCanAddProposition(false);
                 }}>
                 <TextField className={classes.textField}
                     placeholder="Enter a proposition"
@@ -52,12 +69,6 @@ export default function AddPropositionPanel({
                     <span>
                         <IconButton
                             className={`${classes.headerButton} ${classes.doneButton}`}
-                            onClick={() => {
-                                setIsAddClicked(false);
-                                setPropositions([...propositions, propositionRef.current.value]);
-                                setIsExpanded(true);
-                                propositionRef.current.value = null;
-                            }}
                             disabled={!canAddProposition}>
                             <Done />
                         </IconButton>
@@ -69,11 +80,12 @@ export default function AddPropositionPanel({
                         onClick={() => {
                             setIsAddClicked(false);
                             propositionRef.current.value = null;
+                            setCanAddProposition(false);
                         }}>
                         <Close />
                     </IconButton>
                 </Tooltip>
-            </div>
+            </form>
         </Zoom>
     );
 }
