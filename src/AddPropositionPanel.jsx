@@ -36,6 +36,17 @@ export default function AddPropositionPanel({
     const [canAddProposition, setCanAddProposition] = useState(false);
     const propositionRef = useRef(null);
 
+    const addProposition = event => {
+        event.preventDefault();
+
+        setIsAddClicked(false);
+        setPropositions(
+            [...propositions, propositionRef.current.value]);
+        setIsExpanded(true);
+        propositionRef.current.value = null;
+        setCanAddProposition(false);
+    }
+
     useEffect(() => {
         if (isAddClicked) {
             propositionRef.current.focus();
@@ -48,16 +59,7 @@ export default function AddPropositionPanel({
                 onClick={event => {
                     event.stopPropagation();
                 }}
-                onSubmit={event => {
-                    event.preventDefault();
-
-                    setIsAddClicked(false);
-                    setPropositions(
-                        [...propositions, propositionRef.current.value]);
-                    setIsExpanded(true);
-                    propositionRef.current.value = null;
-                    setCanAddProposition(false);
-                }}>
+                onSubmit={addProposition}>
                 <TextField className={classes.textField}
                     placeholder="Enter a proposition"
                     onChange={event => event.target.value ?
@@ -69,7 +71,8 @@ export default function AddPropositionPanel({
                     <span>
                         <IconButton
                             className={`${classes.headerButton} ${classes.doneButton}`}
-                            disabled={!canAddProposition}>
+                            disabled={!canAddProposition}
+                            onClick={addProposition}>
                             <Done />
                         </IconButton>
                     </span>
